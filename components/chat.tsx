@@ -25,12 +25,14 @@ export function Chat({
   id,
   savedMessages = [],
   query,
-  models
+  models,
+  apiEndpoint = '/api/chat' // Add this prop
 }: {
   id: string
   savedMessages?: Message[]
   query?: string
   models?: Model[]
+  apiEndpoint?: string
 }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [isAtBottom, setIsAtBottom] = useState(true)
@@ -51,6 +53,7 @@ export function Chat({
   } = useChat({
     initialMessages: savedMessages,
     id: CHAT_ID,
+    api: apiEndpoint, // Use the custom API endpoint
     body: {
       id
     },

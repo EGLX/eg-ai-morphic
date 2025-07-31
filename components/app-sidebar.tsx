@@ -26,7 +26,7 @@ export default function AppSidebar() {
       <SidebarHeader className="flex flex-row justify-between items-center">
         <Link href="/" className="flex items-center gap-2 px-2 py-3">
           <IconLogo className={cn('size-5')} />
-          <span className="font-semibold text-sm">Morphic</span>
+          <span className="font-semibold text-sm">EG AI</span>
         </Link>
         <SidebarTrigger />
       </SidebarHeader>
@@ -36,9 +36,22 @@ export default function AppSidebar() {
             <SidebarMenuButton asChild>
               <Link href="/" className="flex items-center gap-2">
                 <Plus className="size-4" />
-                <span>New</span>
+                <span>New (Default)</span>
               </Link>
             </SidebarMenuButton>
+            <SidebarMenuButton asChild>
+              <Link href="/dune" className="flex items-center gap-2">
+                <Plus className="size-4" />
+                <span>New (Dune)</span>
+              </Link>
+            </SidebarMenuButton>
+            <SidebarMenuButton asChild>
+              <Link href="/wow" className="flex items-center gap-2">
+                <Plus className="size-4" />
+                <span>New (WoW)</span>
+              </Link>
+            </SidebarMenuButton>
+
           </SidebarMenuItem>
         </SidebarMenu>
         <div className="flex-1 overflow-y-auto">

@@ -207,6 +207,14 @@
       "providerId": "openai-compatible",
       "enabled": true,
       "toolCallType": "native"
+    },
+    {
+      "id": "deepseek/deepseek-r1",
+      "name": "Vercel DeepSeek R1",
+      "provider": "Vercel AI",
+      "providerId": "vercel",
+      "enabled": true,
+      "toolCallType": "native"
     }
   ]
 }

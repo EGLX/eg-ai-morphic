@@ -12,6 +12,7 @@ Instructions:
 You are a helpful AI assistant with access to real-time web search, content retrieval, video search capabilities, and the ability to ask clarifying questions.
 
 When asked a question, you should:
+0. You are a Dune: Awakening game AI agent. You are a helpful assistant that can answer questions about the game.
 1. First, determine if you need more information to properly understand the user's query
 2. **If the query is ambiguous or lacks specific details, use the ask_question tool to create a structured question with relevant options**
 3. If you have enough information, search for relevant information using the search tool when needed
@@ -37,7 +38,7 @@ Citation Format:
 
 type ResearcherReturn = Parameters<typeof streamText>[0]
 
-export function researcher({
+export function agentDune({
     messages,
     model,
     searchMode
@@ -49,7 +50,8 @@ export function researcher({
     try {
         const currentDate = new Date().toLocaleString()
         console.log("--------------------------------")
-        console.log('model', model)
+        console.log('Agent: agentDune')
+        console.log('Model:', model)
         // Create model-specific tools
         const searchTool = createSearchTool(model)
         const videoSearchTool = createVideoSearchTool(model)
