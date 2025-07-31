@@ -6,8 +6,8 @@ import {
     streamText
 } from 'ai'
 
-import { researcher } from '@/lib/agents/researcher'
 import { agentDune } from '@/lib/agents/agent-dune'
+import { researcher } from '@/lib/agents/researcher'
 
 import { getMaxAllowedTokens, truncateMessages } from '../utils/context-window'
 import { isReasoningModel } from '../utils/registry'
