@@ -5,30 +5,35 @@ import { headers } from 'next/headers'
  * Extracts URL information from Next.js request headers
  */
 export async function getBaseUrlFromHeaders(): Promise<URL> {
-  const headersList = await headers()
-  const baseUrl = headersList.get('x-base-url')
-  const url = headersList.get('x-url')
-  const host = headersList.get('x-host')
-  const protocol = headersList.get('x-protocol') || 'http:'
+    try {
+        const headersList = await headers()
+        const baseUrl = headersList.get('x-base-url')
+        const url = headersList.get('x-url')
+        const host = headersList.get('x-host')
+        const protocol = headersList.get('x-protocol') || 'http:'
 
-  try {
-    // Try to use the pre-constructed base URL if available
-    if (baseUrl) {
-      return new URL(baseUrl)
-    } else if (url) {
-      return new URL(url)
-    } else if (host) {
-      const constructedUrl = `${protocol}${
-        protocol.endsWith(':') ? '//' : '://'
-      }${host}`
-      return new URL(constructedUrl)
-    } else {
-      return new URL('http://localhost:3000')
+        try {
+            // Try to use the pre-constructed base URL if available
+            if (baseUrl) {
+                return new URL(baseUrl)
+            } else if (url) {
+                return new URL(url)
+            } else if (host) {
+                const constructedUrl = `${protocol}${protocol.endsWith(':') ? '//' : '://'
+                    }${host}`
+                return new URL(constructedUrl)
+            } else {
+                return new URL('http://localhost:3000')
+            }
+        } catch (urlError) {
+            // Fallback to default URL if any error occurs during URL construction
+            return new URL('http://localhost:3000')
+        }
+    } catch (error) {
+        // If headers() fails (e.g., during static generation), return a default URL
+        console.warn('Headers not available, using default URL for static generation')
+        return new URL('http://localhost:3000')
     }
-  } catch (urlError) {
-    // Fallback to default URL if any error occurs during URL construction
-    return new URL('http://localhost:3000')
-  }
 }
 
 /**
@@ -37,24 +42,24 @@ export async function getBaseUrlFromHeaders(): Promise<URL> {
  * @returns A URL object representing the base URL
  */
 export async function getBaseUrl(): Promise<URL> {
-  // Check for environment variables first
-  const baseUrlEnv = process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL
+    // Check for environment variables first
+    const baseUrlEnv = process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL
 
-  if (baseUrlEnv) {
-    try {
-      const baseUrlObj = new URL(baseUrlEnv)
-      console.log('Using BASE_URL environment variable:', baseUrlEnv)
-      return baseUrlObj
-    } catch (error) {
-      console.warn(
-        'Invalid BASE_URL environment variable, falling back to headers'
-      )
-      // Fall back to headers if the environment variable is invalid
+    if (baseUrlEnv) {
+        try {
+            const baseUrlObj = new URL(baseUrlEnv)
+            console.log('Using BASE_URL environment variable:', baseUrlEnv)
+            return baseUrlObj
+        } catch (error) {
+            console.warn(
+                'Invalid BASE_URL environment variable, falling back to headers'
+            )
+            // Fall back to headers if the environment variable is invalid
+        }
     }
-  }
 
-  // If no valid environment variable is available, use headers
-  return await getBaseUrlFromHeaders()
+    // If no valid environment variable is available, use headers
+    return await getBaseUrlFromHeaders()
 }
 
 /**
@@ -63,6 +68,6 @@ export async function getBaseUrl(): Promise<URL> {
  * @returns A string representation of the base URL
  */
 export async function getBaseUrlString(): Promise<string> {
-  const baseUrlObj = await getBaseUrl()
-  return baseUrlObj.toString()
+    const baseUrlObj = await getBaseUrl()
+    return baseUrlObj.toString()
 }
